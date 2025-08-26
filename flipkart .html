@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Flipkart Style - Simple Frontend</title>
+  <style>
+    :root{
+      --brand:#2874f0;      /* Flipkart-like blue */
+      --accent:#fb641b;     /* CTA orange */
+      --bg:#f1f3f6;         /* light background */
+      --text:#212121;
+      --muted:#878787;
+      --card:#fff;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Helvetica,Arial,sans-serif;
+      color:var(--text);
+      background:var(--bg);
+    }
+    a{color:inherit;text-decoration:none}
+
+    /* Top Header */
+    .topbar{
+      background:var(--brand);
+      color:#fff;
+      position:sticky;
+      top:0;z-index:10;
+      box-shadow:0 2px 8px rgba(0,0,0,.1);
+    }
+    .wrap{max-width:1200px;margin:auto;padding:0 16px}
+    .header{
+      display:flex;align-items:center;gap:12px;
+      padding:10px 0;
+    }
+    .logo{
+      font-weight:800;font-size:20px;letter-spacing:.3px;
+      display:flex;align-items:center;gap:6px;
+    }
+    .logo .spark{font-size:18px}
+
+    .search{
+      flex:1;display:flex;align-items:center;gap:8px;
+      background:#fff;border-radius:8px;padding:6px 10px;
+    }
+    .search input{
+      border:0;outline:0;flex:1;font-size:14px;
+    }
+    .search button{
+      border:0;background:var(--accent);color:#fff;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:600;
+    }
+
+    .actions{display:flex;align-items:center;gap:12px}
+    .btn{background:#fff;color:var(--brand);border:0;padding:8px 12px;border-radius:6px;font-weight:600;cursor:pointer}
+    .cart{display:flex;align-items:center;gap:6px}
+    .badge{background:#ff6161;color:#fff;font-size:12px;padding:2px 6px;border-radius:999px}
+
+    /* Category Bar */
+    .cats{background:#fff;border-bottom:1px solid #e5e7eb}
+    .catrow{display:flex;gap:18px;overflow:auto;padding:10px 0}
+    .catrow a{white-space:nowrap;color:var(--muted);font-weight:600}
+    .catrow a:hover{color:var(--text)}
+
+    /* Banner */
+    .banner{background:#e3f2ff}
+    .banner .hero{display:grid;grid-template-columns:1.2fr .8fr;gap:16px;align-items:center;padding:18px 0}
+    .hero h1{margin:0;font-size:28px}
+    .hero p{margin:8px 0 16px;color:var(--muted)}
+    .hero img{width:100%;border-radius:12px}
+    .cta{background:var(--accent);color:#fff;padding:10px 14px;border:0;border-radius:8px;font-weight:700;cursor:pointer}
+
+    /* Product grids */
+    .section{margin:20px 0}
+    .section h2{margin:0 0 12px 0;font-size:20px}
+    .grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+    @media (max-width:1024px){.grid{grid-template-columns:repeat(4,1fr)}}
+    @media (max-width:640px){.grid{grid-template-columns:repeat(2,1fr)} .banner .hero{grid-template-columns:1fr}}
+
+    .card{background:var(--card);border-radius:12px;padding:10px;box-shadow:0 2px 8px rgba(0,0,0,.06);display:flex;flex-direction:column;gap:8px;transition:transform .15s ease, box-shadow .15s ease}
+    .card:hover{transform:translateY(-3px);box-shadow:0 6px 18px rgba(0,0,0,.12)}
+    .card img{width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:8px;background:#f8fafc}
+    .title{font-size:14px;line-height:1.3;min-height:36px}
+    .price{font-weight:800}
+    .strike{color:var(--muted);text-decoration:line-through;font-weight:500;margin-left:6px}
+    .off{color:#138808;font-weight:700;margin-left:6px}
+    .add{margin-top:auto;border:0;background:var(--brand);color:#fff;padding:8px 10px;border-radius:8px;cursor:pointer;font-weight:700}
+
+    /* Footer */
+    footer{background:#0c2a63;color:#cbd5e1;margin-top:30px}
+    .footergrid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding:22px 0}
+    .footergrid h4{margin:0 0 8px 0;color:#fff}
+    .small{color:#9ca3af;font-size:12px}
+    @media(max-width:800px){.footergrid{grid-template-columns:1fr 1fr}}
+  </style>
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="topbar">
+    <div class="wrap header">
+      <div class="logo" aria-label="Flipkart style logo">
+        <span class="spark">⚡</span> Flipkart <span style="font-weight:500">Clone</span>
+      </div>
+
+      <form class="search" onsubmit="event.preventDefault(); doSearch();">
+        <input id="q" type="search" placeholder="Search for products, brands and more" aria-label="Search" />
+        <button type="submit">Search</button>
+      </form>
+
+      <div class="actions">
+        <button class="btn" onclick="alert('Login popup placeholder')">Login</button>
+        <a class="cart" href="#" onclick="event.preventDefault()">
+          🛒 Cart <span class="badge" id="cartCount">0</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="wrap cats">
+      <div class="catrow">
+        <a href="#">Electronics</a>
+        <a href="#">Mobiles</a>
+        <a href="#">Fashion</a>
+        <a href="#">Home</a>
+        <a href="#">Appliances</a>
+        <a href="#">Beauty</a>
+        <a href="#">Two Wheelers</a>
+        <a href="#">Furniture</a>
+        <a href="#">Grocery</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Banner -->
+  <div class="banner">
+    <div class="wrap hero">
+      <div>
+        <h1>Big Savings on Top Deals</h1>
+        <p>Up to 60% off on mobiles, electronics, fashion and more. Free delivery on your first order.</p>
+        <button class="cta" onclick="scrollToDeals()">Shop Deals</button>
+      </div>
+      <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&auto=format&fit=crop" alt="Promo banner"/>
+    </div>
+  </div>
+
+  <!-- Sections -->
+  <main class="wrap">
+    <section class="section" id="deals">
+      <h2>Top Offers</h2>
+      <div class="grid" id="grid">
+        <!-- Product Cards injected by JS below for brevity -->
+      </div>
+    </section>
+
+    <section class="section">
+      <h2>Best of Electronics</h2>
+      <div class="grid">
+        <!-- Static sample cards -->
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&auto=format&fit=crop" alt="Smartphone"/>
+          <div class="title">Smartphone Pro Max (128GB)</div>
+          <div><span class="price">₹29,999</span><span class="strike">₹39,999</span><span class="off">25% off</span></div>
+          <button class="add" onclick="addToCart('Smartphone Pro Max')">Add to Cart</button>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1517336714731-489689fd1ca8?q=80&w=800&auto=format&fit=crop" alt="Laptop"/>
+          <div class="title">UltraThin Laptop i5, 16GB, 512GB SSD</div>
+          <div><span class="price">₹54,990</span><span class="strike">₹72,990</span><span class="off">25% off</span></div>
+          <button class="add" onclick="addToCart('UltraThin Laptop')">Add to Cart</button>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?q=80&w=800&auto=format&fit=crop" alt="Headphones"/>
+          <div class="title">Wireless Noise-Canceling Headphones</div>
+          <div><span class="price">₹2,499</span><span class="strike">₹3,999</span><span class="off">38% off</span></div>
+          <button class="add" onclick="addToCart('Headphones')">Add to Cart</button>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1526401485004-2fda9f4e7431?q=80&w=800&auto=format&fit=crop" alt="Smartwatch"/>
+          <div class="title">Smartwatch with SpO₂ & GPS</div>
+          <div><span class="price">₹3,499</span><span class="strike">₹5,999</span><span class="off">41% off</span></div>
+          <button class="add" onclick="addToCart('Smartwatch')">Add to Cart</button>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1529336953121-4f3dd106b38e?q=80&w=800&auto=format&fit=crop" alt="Camera"/>
+          <div class="title">Mirrorless Camera 24MP Kit</div>
+          <div><span class="price">₹48,990</span><span class="strike">₹59,990</span><span class="off">18% off</span></div>
+          <button class="add" onclick="addToCart('Camera')">Add to Cart</button>
+        </article>
+        <article class="card">
+          <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=800&auto=format&fit=crop" alt="Keyboard"/>
+          <div class="title">Mechanical Keyboard (RGB)</div>
+          <div><span class="price">₹2,199</span><span class="strike">₹3,499</span><span class="off">37% off</span></div>
+          <button class="add" onclick="addToCart('Keyboard')">Add to Cart</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap footergrid">
+      <div>
+        <h4>About</h4>
+        <div class="small">This is a student demo recreating a Flipkart-style layout using plain HTML, CSS & JS.</div>
+      </div>
+      <div>
+        <h4>Help</h4>
+        <div class="small">Payments • Shipping • Cancellation • FAQ</div>
+      </div>
+      <div>
+        <h4>Policy</h4>
+        <div class="small">Return Policy • Terms of Use • Security • Privacy</div>
+      </div>
+      <div>
+        <h4>Social</h4>
+        <div class="small">YouTube • Instagram • Twitter</div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Simple mock data to auto-fill Top Offers
+    const products = [
+      {title:"Running Shoes Men", price:"₹1,499", mrp:"₹2,999", off:"50% off", img:"https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop"},
+      {title:"Bluetooth Speaker Mini", price:"₹899", mrp:"₹1,499", off:"40% off", img:"https://images.unsplash.com/photo-1519677100203-a0e668c92439?q=80&w=800&auto=format&fit=crop"},
+      {title:"Casual Shirt Cotton", price:"₹699", mrp:"₹1,299", off:"46% off", img:"https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=800&auto=format&fit=crop"},
+      {title:"Non-stick Cookware Set", price:"₹1,299", mrp:"₹2,499", off:"48% off", img:"https://images.unsplash.com/photo-1505577058444-a3dab90d4253?q=80&w=800&auto=format&fit=crop"},
+      {title:"Backpack 30L", price:"₹799", mrp:"₹1,599", off:"50% off", img:"https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?q=80&w=800&auto=format&fit=crop"},
+      {title:"LED TV 43\" Smart", price:"₹19,999", mrp:"₹29,999", off:"33% off", img:"https://images.unsplash.com/photo-1527698266440-12104e498b76?q=80&w=800&auto=format&fit=crop"},
+      {title:"Mixer Grinder 750W", price:"₹2,899", mrp:"₹4,499", off:"35% off", img:"https://images.unsplash.com/photo-1602143407151-7111542de6e8?q=80&w=800&auto=format&fit=crop"},
+      {title:"Ceiling Lamp Modern", price:"₹1,199", mrp:"₹2,199", off:"45% off", img:"https://images.unsplash.com/photo-1494438639946-1ebd1d20bf85?q=80&w=800&auto=format&fit=crop"}
+    ];
+
+    const grid = document.getElementById('grid');
+    grid.innerHTML = products.map(p => `
+      <article class="card">
+        <img src="${p.img}" alt="${p.title}"/>
+        <div class="title">${p.title}</div>
+        <div><span class="price">${p.price}</span><span class="strike">${p.mrp}</span><span class="off">${p.off}</span></div>
+        <button class="add" onclick="addToCart('${p.title.replace(/'/g, "\'")}')">Add to Cart</button>
+      </article>
+    `).join('');
+
+    // Simple cart counter
+    let count = 0;
+    function addToCart(name){
+      count++; document.getElementById('cartCount').textContent = count;
+      toast(`${name} added to cart`);
+    }
+
+    function doSearch(){
+      const q = document.getElementById('q').value.trim();
+      if(!q) return;
+      toast(`Searching for: ${q}`);
+    }
+
+    function scrollToDeals(){
+      document.getElementById('deals').scrollIntoView({behavior:'smooth'});
+    }
+
+    // Tiny toast
+    const toastBox = document.createElement('div');
+    Object.assign(toastBox.style,{position:'fixed',bottom:'20px',left:'50%',transform:'translateX(-50%)',padding:'10px 14px',background:'#111',color:'#fff',borderRadius:'8px',fontWeight:'700',opacity:0,transition:'opacity .2s, transform .2s',zIndex:50});
+    document.body.appendChild(toastBox);
+    let toastTimer;
+    function toast(msg){
+      toastBox.textContent = msg;
+      toastBox.style.opacity = 1;
+      toastBox.style.transform = 'translateX(-50%) translateY(0)';
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(()=>{toastBox.style.opacity=0;toastBox.style.transform='translateX(-50%) translateY(10px)';},140);
+    }
+  </script>
+</body>
+</html>
